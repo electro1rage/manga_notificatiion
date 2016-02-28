@@ -21,7 +21,7 @@ class Manga:
 	class Latest:
 		def add_dict(self, manga_dict):
 			manga_dict = dict(manga_dict)
-			manga_latest_file = open(Files().manga_latest_path, "w")
+			manga_latest_file = open(manga_latest_path, "w")
 			for key in manga_dict:
 				manga_latest_file.write(str(key) + " " + str(manga_dict[key]) + "\n")
 			manga_latest_file.close()
