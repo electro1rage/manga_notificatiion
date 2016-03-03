@@ -9,8 +9,12 @@ class MangaFox:
 	def __init__(self):
 		self.base_url = "http://mangafox.me/manga/"
 	def get_latest_manga(self, manga):
-		html_file = requests.get(self.base_url + manga)
 		ret_dict = {}
+		try:
+			html_file = requests.get(self.base_url + manga)
+		except requests.exceptions.ConnectionError:
+			ret_dict["status"] = 404
+			return ret_dict
 		if html_file.status_code == 200:
 			ret_dict["status"] = 200
 			html_doc = html_file.text
@@ -48,7 +52,7 @@ while 1:
 	if got_new == 1:
 		Manga().Latest().add_dict(manga_latest)
 		input("Lucky you found new Manga, click enter to continue!!")
-	time.sleep(60)
+	time.sleep(60 * 5)
 
 
 
