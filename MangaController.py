@@ -11,11 +11,14 @@ class MangaFox:
 	def get_latest_manga(self, manga):
 		ret_dict = {}
 		try:
-			html_file = requests.get(self.base_url + manga)
+			html_file = requests.get(self.base_url + manga, timeout = 5)
+			print("Got the request back.")
 		except requests.exceptions.ConnectionError:
 			ret_dict["status"] = 404
+			print("Connection Error.")
+		if int(ret_dict.get("status", 200)) == 404:
 			return ret_dict
-		if html_file.status_code == 200:
+		if int(html_file.status_code) == 200:
 			ret_dict["status"] = 200
 			html_doc = html_file.text
 			soup = BeautifulSoup(html_doc, "html.parser")
@@ -38,7 +41,7 @@ while 1:
 	got_new = 0
 	for manga in manga_followed:
 		last_chapter_dict = dict(manga_fox.get_latest_manga(manga))
-		if last_chapter_dict["status"] == 404:
+		if int(last_chapter_dict["status"]) == 404:
 			continue
 		last_chapter_text = last_chapter_dict["last_chapter_text"]
 		last_chapter_link = last_chapter_dict["last_chapter_link"]
