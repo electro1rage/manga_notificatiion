@@ -16,6 +16,10 @@ class MangaFox:
 		except requests.exceptions.ConnectionError:
 			ret_dict["status"] = 404
 			print("Connection Error.")
+		except requests.exceptions.Timeout:
+			print("Request Timed Out! :(")
+			ret_dict["status"] = 404
+
 		if int(ret_dict.get("status", 200)) == 404:
 			return ret_dict
 		if int(html_file.status_code) == 200:
@@ -28,6 +32,7 @@ class MangaFox:
 			ret_dict["last_chapter_text"] = str(soup.get_text())
 			ret_dict["last_chapter_link"] = str(soup.find("a").get("href"))
 			return ret_dict
+
 		ret_dict["status"] = 404
 		return ret_dict
 
@@ -47,7 +52,7 @@ while 1:
 		last_chapter_link = last_chapter_dict["last_chapter_link"]
 		last_chapter = last_chapter_text.split()
 		last_chapter_name = " ".join(str(x) for x in last_chapter[0:-1])
-		last_chapter_number = int(last_chapter[-1])
+		last_chapter_number = str(last_chapter[-1])
 		if str(manga_latest.get(last_chapter_name, "NULL")) != str(last_chapter_number):
 			manga_latest[last_chapter_name] = last_chapter_number
 			print("new chapter!!! {} from Manga {}, link {}".format(last_chapter_number, last_chapter_name, last_chapter_link))
