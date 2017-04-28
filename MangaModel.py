@@ -1,7 +1,7 @@
 
 class Files:
-	manga_followed_path = "/home/electro__rage/MyScripts/manga_notificatiion/manga_followed"
-	manga_latest_path = "/home/electro__rage/MyScripts/manga_notificatiion/last_chapter"
+	manga_followed_path = "manga_followed"
+	manga_latest_path = "last_chapter"
 
 class Manga:
 	class Followed:

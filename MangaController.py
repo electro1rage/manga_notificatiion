@@ -60,6 +60,8 @@ while 1:
 	if got_new == 1:
 		Manga().Latest().add_dict(manga_latest)
 		input("Lucky you found new Manga, click enter to continue!!")
+	else:
+		print("No new Manga :(")
 	time.sleep(60 * 5)
 
 
